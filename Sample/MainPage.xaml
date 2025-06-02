@@ -27,6 +27,7 @@
           RowDefinitions="Auto, *">
         <CollectionView ItemsSource="{Binding FontFamilies, Mode=OneWay}"
                         SelectedItem="{Binding SelectedFontFamily, Mode=TwoWay}"
+                        ItemTemplate="{StaticResource FontFamilyTemplate}"
                         SelectionMode="Single"
                         Grid.Row="0"
                         Grid.RowSpan="2"
