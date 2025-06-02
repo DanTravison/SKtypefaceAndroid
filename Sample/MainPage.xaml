@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Sample"
+             x:Class="Sample.MainPage"
+             x:DataType="local:MainViewModel">
+
+    <ContentPage.Resources>
+
+        <DataTemplate x:Key="FontFamilyTemplate" x:DataType="x:String">
+            <Label Text="{Binding}"
+                   FontSize="20"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="PropertyTemplate" x:DataType="local:NamedValue">
+            <HorizontalStackLayout Padding="10">
+                <Label Text="{Binding Name}" Margin="10,0,10,0"
+                       FontSize="20"/>
+                <Label Text="{Binding Value}"
+                       FontSize="20"/>
+            </HorizontalStackLayout>
+        </DataTemplate>
+                
+    </ContentPage.Resources>
+
+    <Grid ColumnDefinitions="Auto, *"
+          RowDefinitions="Auto, *">
+        <CollectionView ItemsSource="{Binding FontFamilies, Mode=OneWay}"
+                        SelectedItem="{Binding SelectedFontFamily, Mode=TwoWay}"
+                        SelectionMode="Single"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="0"
+                        />
+
+        <CollectionView ItemTemplate="{StaticResource PropertyTemplate}"
+                        ItemsSource="{Binding Properties, Mode=OneWay}"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="1"
+                        />
+
+    </Grid>
+</ContentPage>
