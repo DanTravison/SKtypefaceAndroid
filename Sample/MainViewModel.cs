@@ -4,6 +4,7 @@ namespace Sample;
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using SkiaSharp;
 
 public sealed class MainViewModel : INotifyPropertyChanged
@@ -51,13 +52,28 @@ public sealed class MainViewModel : INotifyPropertyChanged
     static List<NamedValue> CreateProperties(string familyName)
     {
         SKTypeface typeface = SKTypeface.FromFamilyName(familyName, SKFontStyle.Normal);
+        if (typeface is not null && typeface.FamilyName != familyName)
+        {
+            typeface = SKTypeface.FromFamilyName(familyName);
+        }
+        if (typeface is null)
+        {
+            Trace.WriteLine($"{familyName} could not be loaded");
+            return [];
+        }
+
+        Trace.WriteLine($"{familyName} resolved to {typeface.FamilyName}");
         using (SKFont font = new(typeface, 12))
         {
             font.GetFontMetrics(out SKFontMetrics metrics);
 
             return
             [
-                new(nameof(typeface.FamilyName), typeface.FamilyName),
+                new("FamilyName (Expected)", familyName),
+                new("FamilyName (Actual)", typeface.FamilyName),
+                new(nameof(typeface.FontWidth), typeface.FontWidth.ToString()),
+                new(nameof(typeface.FontSlant), typeface.FontWeight.ToString()),
+                new(nameof(typeface.FontWeight), typeface.FontWeight.ToString()),
                 new(nameof(metrics.Ascent), metrics.Ascent.ToString()),
                 new(nameof(metrics.Descent), metrics.Descent.ToString()),
                 new(nameof(metrics.Top), metrics.Top.ToString()),

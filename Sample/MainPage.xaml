@@ -13,8 +13,13 @@
         </DataTemplate>
 
         <DataTemplate x:Key="PropertyTemplate" x:DataType="local:NamedValue">
-            <HorizontalStackLayout Padding="10">
-                <Label Text="{Binding Name}" Margin="10,0,10,0"
+            <HorizontalStackLayout>
+                <Label Text="{Binding Name}"
+                       FontAttributes="Bold"
+                       FontSize="20"/>
+                <Label Text=":" 
+                       Margin="5,0,5,0"
+                       FontAttributes="Bold"
                        FontSize="20"/>
                 <Label Text="{Binding Value}"
                        FontSize="20"/>
